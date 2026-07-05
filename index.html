@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Henry Oghenekeno Richard — Aerospace Engineering Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:   #0D1F35;
+    --panel:  #111D2E;
+    --mid:    #1C2F47;
+    --rim:    #243B55;
+    --amber:  #F5A623;
+    --amber2: #E8900F;
+    --off:    #E8EDF3;
+    --muted:  #7A90A8;
+    --text:   #C8D6E5;
+    --white:  #FFFFFF;
+    --mono:   'Space Mono', monospace;
+    --sans:   'Space Grotesk', sans-serif;
+    --radius: 6px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ─────────────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(13,31,53,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rim);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 60px;
+  }
+  .nav-logo {
+    font-family: var(--mono); font-size: 13px; color: var(--amber);
+    letter-spacing: .08em; text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    letter-spacing: .04em; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  /* ── HERO ────────────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 100px 40px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center;
+  }
+  .hero-eyebrow {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: .15em; text-transform: uppercase; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--amber);
+  }
+  h1 {
+    font-size: clamp(36px, 5vw, 60px); font-weight: 700;
+    color: var(--white); line-height: 1.05; letter-spacing: -.02em;
+    margin-bottom: 24px;
+  }
+  h1 span { color: var(--amber); }
+  .hero-desc {
+    font-size: 17px; color: var(--muted); max-width: 520px;
+    line-height: 1.75; margin-bottom: 36px;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+  .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .06em;
+    padding: 4px 12px; border-radius: 2px;
+    border: 1px solid var(--rim); color: var(--muted); background: var(--panel);
+  }
+  .tag.active { border-color: var(--amber); color: var(--amber); }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 24px; border-radius: var(--radius);
+    font-family: var(--sans); font-size: 14px; font-weight: 500;
+    text-decoration: none; transition: all .2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--amber); color: var(--navy);
+  }
+  .btn-primary:hover { background: var(--amber2); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--off);
+    border: 1px solid var(--rim);
+  }
+  .btn-outline:hover { border-color: var(--muted); background: var(--mid); }
+
+  /* ── ROTOR SVG ANIMATION ────────────────────────────────────── */
+  .rotor-wrap {
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .rotor-ring {
+    width: 360px; height: 360px; border-radius: 50%;
+    border: 1px solid var(--rim);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .rotor-ring::before {
+    content: ''; position: absolute;
+    width: 340px; height: 340px; border-radius: 50%;
+    border: 1px dashed rgba(245,166,35,0.15);
+  }
+  #rotor-svg { animation: spin 4s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  .rotor-data {
+    position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%);
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    white-space: nowrap; letter-spacing: .08em;
+  }
+  .hub-dot {
+    position: absolute; width: 12px; height: 12px; border-radius: 50%;
+    background: var(--amber); top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px rgba(245,166,35,0.6);
+  }
+
+  /* ── SECTIONS ────────────────────────────────────────────────── */
+  section { padding: 100px 40px; }
+  .container { max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: .15em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+  }
+  .section-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 1px; background: var(--amber);
+  }
+  h2 {
+    font-size: clamp(28px, 4vw, 42px); font-weight: 700;
+    color: var(--white); letter-spacing: -.02em; margin-bottom: 16px;
+  }
+  .section-sub {
+    font-size: 17px; color: var(--muted); max-width: 560px;
+    line-height: 1.75; margin-bottom: 60px;
+  }
+
+  /* ── STATS BAR ───────────────────────────────────────────────── */
+  .stats-bar {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: var(--radius);
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    overflow: hidden; margin-bottom: 0;
+  }
+  .stat {
+    padding: 28px 32px; border-right: 1px solid var(--rim);
+    position: relative;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-val {
+    font-family: var(--mono); font-size: 36px; font-weight: 700;
+    color: var(--amber); line-height: 1; margin-bottom: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--muted); }
+
+  /* ── PROJECTS ────────────────────────────────────────────────── */
+  #projects { background: var(--panel); }
+  .projects-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 24px;
+  }
+  .project-card {
+    background: var(--navy); border: 1px solid var(--rim);
+    border-radius: var(--radius); overflow: hidden;
+    transition: border-color .2s, transform .2s;
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover { border-color: var(--amber); transform: translateY(-3px); }
+  .card-header {
+    padding: 28px 28px 0;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  }
+  .card-icon {
+    width: 44px; height: 44px; border-radius: var(--radius);
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .card-status {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .08em;
+    padding: 3px 8px; border-radius: 2px;
+  }
+  .status-done { background: rgba(29,158,117,0.15); color: #1D9E75; border: 1px solid rgba(29,158,117,0.3); }
+  .status-wip  { background: rgba(245,166,35,0.12); color: var(--amber); border: 1px solid rgba(245,166,35,0.3); }
+  .card-body { padding: 20px 28px; flex: 1; }
+  .card-title {
+    font-size: 18px; font-weight: 600; color: var(--white);
+    margin-bottom: 8px; line-height: 1.3;
+  }
+  .card-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .card-tag {
+    font-family: var(--mono); font-size: 10px; padding: 2px 8px;
+    border-radius: 2px; background: var(--mid); color: var(--muted);
+    letter-spacing: .04em;
+  }
+  .card-footer {
+    padding: 16px 28px 24px;
+    border-top: 1px solid var(--rim);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-result {
+    font-family: var(--mono); font-size: 12px; color: var(--amber);
+  }
+  .card-link {
+    font-size: 13px; color: var(--muted); text-decoration: none;
+    display: flex; align-items: center; gap: 6px; transition: color .2s;
+  }
+  .card-link:hover { color: var(--white); }
+
+  /* ── SKILLS ──────────────────────────────────────────────────── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .skill-group {
+    background: var(--panel); border: 1px solid var(--rim);
+    border-radius: var(--radius); padding: 28px;
+  }
+  .skill-group-title {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 20px;
+  }
+  .skill-item {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 0; border-bottom: 1px solid var(--rim);
+  }
+  .skill-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .skill-name { font-size: 14px; color: var(--text); }
+  .skill-bar-wrap {
+    width: 100px; height: 4px; background: var(--mid); border-radius: 2px; overflow: hidden;
+  }
+  .skill-bar { height: 100%; background: var(--amber); border-radius: 2px; }
+
+  /* ── CERTIFICATIONS ──────────────────────────────────────────── */
+  #certifications { background: var(--panel); }
+  .certs-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .cert-card {
+    background: var(--navy); border: 1px solid var(--rim);
+    border-radius: var(--radius); padding: 20px 22px;
+    display: flex; gap: 16px; align-items: flex-start;
+    transition: border-color .2s;
+  }
+  .cert-card:hover { border-color: rgba(245,166,35,0.4); }
+  .cert-icon {
+    width: 36px; height: 36px; border-radius: var(--radius);
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .cert-name { font-size: 14px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .cert-issuer { font-size: 12px; color: var(--muted); }
+  .cert-year { font-family: var(--mono); font-size: 11px; color: var(--amber); margin-top: 4px; }
+
+  /* ── ABOUT ───────────────────────────────────────────────────── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .about-text p { font-size: 16px; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+  .about-text p strong { color: var(--text); }
+  .career-timeline { display: flex; flex-direction: column; gap: 0; }
+  .timeline-item { display: flex; gap: 20px; position: relative; }
+  .timeline-line {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .timeline-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    border: 2px solid var(--amber); background: var(--navy);
+    flex-shrink: 0; margin-top: 5px;
+  }
+  .timeline-connector {
+    width: 1px; background: var(--rim); flex: 1; margin: 4px 0;
+    min-height: 32px;
+  }
+  .timeline-item:last-child .timeline-connector { display: none; }
+  .timeline-content { padding-bottom: 28px; }
+  .timeline-year {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: .06em; margin-bottom: 4px;
+  }
+  .timeline-title { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 4px; }
+  .timeline-sub { font-size: 13px; color: var(--muted); }
+
+  /* ── CONTACT ─────────────────────────────────────────────────── */
+  #contact { background: var(--mid); }
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+  }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: var(--radius);
+    background: rgba(245,166,35,0.1); border: 1px solid rgba(245,166,35,0.25);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+  }
+  .contact-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+  .contact-val { font-size: 15px; color: var(--white); font-weight: 500; }
+  .contact-val a { color: var(--white); text-decoration: none; }
+  .contact-val a:hover { color: var(--amber); }
+
+  /* ── REPORT HIGHLIGHT ────────────────────────────────────────── */
+  .report-card {
+    background: var(--navy); border: 1px solid var(--rim);
+    border-left: 3px solid var(--amber);
+    border-radius: var(--radius); padding: 32px;
+  }
+  .report-card h3 {
+    font-size: 20px; font-weight: 600; color: var(--white); margin-bottom: 10px;
+  }
+  .report-card p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 20px; }
+  .report-meta {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;
+  }
+  .report-meta-item { }
+  .report-meta-label { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: .06em; }
+  .report-meta-val { font-size: 13px; color: var(--text); font-weight: 500; }
+
+  /* ── FOOTER ──────────────────────────────────────────────────── */
+  footer {
+    background: var(--panel); border-top: 1px solid var(--rim);
+    padding: 32px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-copy { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color .2s; }
+  .footer-links a:hover { color: var(--amber); }
+
+  /* ── DIVIDER LINE ────────────────────────────────────────────── */
+  hr { border: none; border-top: 1px solid var(--rim); }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { padding: 90px 20px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .rotor-ring { width: 240px; height: 240px; }
+    .rotor-ring::before { width: 220px; height: 220px; }
+    section { padding: 70px 20px; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .stat { border-bottom: 1px solid var(--rim); }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">HOR // AEROSPACE</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#plots">Plots</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid container">
+    <div>
+      <p class="hero-eyebrow">Portfolio — July 2026</p>
+      <h1>Henry<br>Oghenekeno<br><span>Richard</span></h1>
+      <p class="hero-desc">Aerospace Engineering student at Lagos State University. Building toward a career as a licensed Aircraft Maintenance Engineer, with a focus on rotary-wing platforms and MRO engineering.</p>
+      <div class="hero-tags">
+        <span class="tag active">EASA Part-66</span>
+        <span class="tag active">Rotary-wing AME</span>
+        <span class="tag">LASU Aerospace Eng.</span>
+        <span class="tag">CGPA 3.2/5.0</span>
+        <span class="tag">MATLAB · AutoCAD</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#projects" class="btn btn-primary">View Projects ↓</a>
+        <a href="mailto:kenorichard072@gmail.com" class="btn btn-outline">Contact Me</a>
+      </div>
+    </div>
+
+    <!-- ROTOR ANIMATION -->
+    <div class="rotor-wrap">
+      <div class="rotor-ring">
+        <div class="hub-dot"></div>
+        <svg id="rotor-svg" width="300" height="300" viewBox="-150 -150 300 300" xmlns="http://www.w3.org/2000/svg">
+          <!-- 2 main rotor blades -->
+          <ellipse cx="0" cy="-90" rx="14" ry="88" fill="none" stroke="#F5A623" stroke-width="2" opacity="0.85"/>
+          <ellipse cx="0" cy="90"  rx="14" ry="88" fill="none" stroke="#F5A623" stroke-width="2" opacity="0.85"/>
+          <!-- blade fill -->
+          <ellipse cx="0" cy="-90" rx="14" ry="88" fill="rgba(245,166,35,0.07)"/>
+          <ellipse cx="0" cy="90"  rx="14" ry="88" fill="rgba(245,166,35,0.07)"/>
+          <!-- lift gradient lines -->
+          <line x1="0" y1="-20" x2="0" y2="-178" stroke="rgba(245,166,35,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+          <line x1="0" y1="20"  x2="0" y2="178"  stroke="rgba(245,166,35,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+          <!-- tip markers -->
+          <circle cx="0" cy="-177" r="3" fill="#F5A623" opacity="0.8"/>
+          <circle cx="0" cy="177"  r="3" fill="#F5A623" opacity="0.8"/>
+          <!-- sweep arc -->
+          <circle cx="0" cy="0" r="140" fill="none" stroke="rgba(245,166,35,0.06)" stroke-width="28"/>
+          <!-- hub -->
+          <circle cx="0" cy="0" r="18" fill="var(--mid)" stroke="#F5A623" stroke-width="1.5"/>
+          <circle cx="0" cy="0" r="6"  fill="#F5A623"/>
+        </svg>
+        <p class="rotor-data" id="rpm-display">RPM: 300 &nbsp;|&nbsp; FM: 0.730</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div style="padding: 0 40px; background: var(--panel); border-top: 1px solid var(--rim); border-bottom: 1px solid var(--rim);">
+  <div class="container">
+    <div class="stats-bar" style="border:none; border-radius:0;">
+      <div class="stat">
+        <div class="stat-val">14</div>
+        <div class="stat-label">MATLAB performance plots — 16-page report</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">0.780</div>
+        <div class="stat-label">AW139 Figure of Merit — validated</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">4</div>
+        <div class="stat-label">Research phases completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">5</div>
+        <div class="stat-label">MRO internship applications in progress</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-eyebrow">Engineering work</p>
+    <h2>Projects</h2>
+    <p class="section-sub">Computational and technical projects built as part of a structured pathway toward a licensed AME career.</p>
+
+    <div class="projects-grid">
+
+      <!-- Project 1 — Main rotor project -->
+      <div class="project-card" style="border-color: rgba(245,166,35,0.3);">
+        <div class="card-header">
+          <div class="card-icon">🚁</div>
+          <span class="card-status status-done">COMPLETE</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Aerodynamic Performance Analysis of Helicopter Rotor Systems</div>
+          <div class="card-desc">A four-phase computational analysis of helicopter rotor aerodynamics using Blade Element Theory and Actuator Disc Theory in MATLAB. Comparing the Bell 206B JetRanger and AgustaWestland AW139 — two aircraft operated by Caverton Helicopters in Nigeria's offshore sector. Results validated: AW139 generates 4.4× more total lift than Bell 206B despite lower RPM, confirming aerodynamic scaling consistency across the two aircraft types.</div>
+          <div class="card-tags">
+            <span class="card-tag">MATLAB</span>
+            <span class="card-tag">Blade Element Theory</span>
+            <span class="card-tag">Actuator Disc</span>
+            <span class="card-tag">Bell 206B</span>
+            <span class="card-tag">AW139</span>
+            <span class="card-tag">Figure of Merit</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-result">FM: 0.680 (Bell 206B) · 0.780 (AW139)</span>
+          <a href="#report" class="card-link">View report →</a>
+        </div>
+      </div>
+
+      <!-- Project 2 — GPU Monitor -->
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-icon">⚡</div>
+          <span class="card-status status-wip">IN PROGRESS</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Smart Aircraft GPU Fault Detection & Monitoring System</div>
+          <div class="card-desc">An IoT-based embedded system monitoring Ground Power Unit output parameters (voltage, current, frequency, temperature) in real time. Detects faults before aircraft electrical systems are damaged. Submitted to ICEPT 2026 Student Project Exhibition.</div>
+          <div class="card-tags">
+            <span class="card-tag">Arduino</span>
+            <span class="card-tag">ESP32</span>
+            <span class="card-tag">IoT</span>
+            <span class="card-tag">Blynk</span>
+            <span class="card-tag">115V/400Hz</span>
+            <span class="card-tag">ICEPT 2026</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-result">Competition: Oct 13–14, Port Harcourt</span>
+          <a href="#contact" class="card-link">Enquire →</a>
+        </div>
+      </div>
+
+      <!-- Project 3 — AutoCAD -->
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-icon">✏️</div>
+          <span class="card-status status-wip">IN PROGRESS</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Helicopter Component Technical Drawing Package</div>
+          <div class="card-desc">A professional AutoCAD drawing package for helicopter structural components including tail rotor assembly and landing gear strut sections — plan, elevation, section views, tolerancing, and title blocks to engineering drawing standard.</div>
+          <div class="card-tags">
+            <span class="card-tag">AutoCAD</span>
+            <span class="card-tag">Technical Drawing</span>
+            <span class="card-tag">GD&T</span>
+            <span class="card-tag">Structural</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-result">Target: September 2026</span>
+          <a href="#contact" class="card-link">Enquire →</a>
+        </div>
+      </div>
+
+      <!-- Project 4 — Vibration -->
+      <div class="project-card">
+        <div class="card-header">
+          <div class="card-icon">📊</div>
+          <span class="card-status status-wip">PLANNED</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Vibration Analysis & Fault Detection — Rotating Components</div>
+          <div class="card-desc">MATLAB signal processing model simulating vibration signatures of rotating aircraft components at varying speeds, with fault detection algorithms mirroring Health & Usage Monitoring System (HUMS) diagnostic logic used on offshore helicopter platforms.</div>
+          <div class="card-tags">
+            <span class="card-tag">MATLAB</span>
+            <span class="card-tag">Signal Processing</span>
+            <span class="card-tag">HUMS</span>
+            <span class="card-tag">Fault Detection</span>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span class="card-result">Target: August–September 2026</span>
+          <a href="#contact" class="card-link">Enquire →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REPORT SECTION -->
+<section id="report" style="background: var(--navy); padding: 80px 40px;">
+  <div class="container">
+    <p class="section-eyebrow">Featured publication</p>
+    <h2>Project Report</h2>
+    <p class="section-sub">Full technical report available for download — 16 pages, 14 performance plots.</p>
+    <div class="report-card">
+      <h3>Aerodynamic Performance Analysis of Helicopter Rotor Systems</h3>
+      <p>A comparative computational study of the Bell 206B JetRanger and AgustaWestland AW139 using Blade Element Theory (BET) and Actuator Disc Theory, implemented in MATLAB. The report covers four phases: baseline lift modelling, non-linear stall behaviour, two-aircraft comparison, and engine power/Figure of Merit analysis. Confirmed results: Bell 206B total hover power 72.8 kW (FM = 0.680), AW139 total hover power 287.7 kW (FM = 0.780). Linear model overestimates lift by 67% above stall angle. AW139 requires only 0.045 kW/kg vs Bell 206B's 0.050 kW/kg — demonstrating superior disc efficiency.</p>
+      <div class="report-meta">
+        <div class="report-meta-item">
+          <div class="report-meta-label">AUTHOR</div>
+          <div class="report-meta-val">Henry Oghenekeno Richard</div>
+        </div>
+        <div class="report-meta-item">
+          <div class="report-meta-label">INSTITUTION</div>
+          <div class="report-meta-val">Lagos State University, 2026</div>
+        </div>
+        <div class="report-meta-item">
+          <div class="report-meta-label">KEY RESULT</div>
+          <div class="report-meta-val">AW139 FM = 0.780 · Bell 206B FM = 0.680</div>
+        </div>
+        <div class="report-meta-item">
+          <div class="report-meta-label">PAGES / PLOTS</div>
+          <div class="report-meta-val">16 pages · 14 MATLAB figures</div>
+        </div>
+      </div>
+      <a href="Helicopter_Rotor_Analysis_Report_Henry_Richard.docx" class="btn btn-primary" download>⬇ Download Full Report (.docx)</a>
+    </div>
+  </div>
+</section>
+
+<!-- PLOTS GALLERY -->
+<section id="plots" style="background: var(--navy); padding: 80px 40px; border-top: 1px solid var(--rim);">
+  <div class="container">
+    <p class="section-eyebrow">MATLAB output</p>
+    <h2>Performance Plots</h2>
+    <p class="section-sub">All 14 MATLAB figures generated across the four project phases — from baseline lift curves to Figure of Merit analysis.</p>
+
+    <!-- Phase labels + plot grid -->
+    <div style="display:flex;flex-direction:column;gap:40px;">
+
+      <!-- Phase 1 -->
+      <div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="display:block;width:24px;height:1px;background:var(--amber)"></span>
+          Phase 1 — Baseline Lift Model (Plots 1–4)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 1 — Rotor Lift vs RPM</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Lift scales quadratically with RPM. At 450 RPM (pitch = 8°): ~27 kN for a 2-bladed rotor with R = 5.0 m, c = 0.30 m.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Max: ~27 kN @ 450 RPM</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 2 — Lift vs Pitch Angle</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Linear relationship confirmed in pre-stall regime (0–14°). At RPM = 300: lift rises from 0 to ~23 kN at 14° pitch.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Linear: 0 → ~23 kN (0–14°)</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 3 — 3D Performance Surface</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Full operating envelope mapped across RPM (200–450) and pitch (0–12°). Jet colormap — peak lift at top-right corner.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Surface: RPM × Pitch → Lift (kN)</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 4 — Spanwise Lift Distribution</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Tip (final 30% span) generates ~65% of total lift. Tip lift: ~4,000 N/m vs hub region ~50 N/m — 80× differential.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Tip peak: ~4,000 N/m</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2A -->
+      <div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="display:block;width:24px;height:1px;background:var(--amber)"></span>
+          Phase 2A — Stall Modelling (Plots 5–7)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 5 — Non-linear Cl vs Pitch</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Piecewise lift coefficient model: linear to 14°, smooth drop 14–17°, post-stall plateau at 60% of Cl_max above 17°.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Stall onset: 14° | Post-stall: 60% Cl_max</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 6 — Linear vs Stall Model</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Linear model (blue dashed) diverges sharply above 14°. At 20° pitch: linear overestimates lift by 67% vs physically accurate stall model (red).</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Error at 20°: +67% overestimate</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 7 — 3D Surface with Stall Boundary</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">White line delineates safe operating envelope from stall-risk zone. Analogous to HIGE/HOGE envelopes in helicopter Flight Manuals.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Stall boundary: white line @ 14°</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2B -->
+      <div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="display:block;width:24px;height:1px;background:var(--amber)"></span>
+          Phase 2B — Bell 206B vs AW139 (Plots 8–10)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 8 — Lift vs RPM: 206B vs AW139</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">AW139 (red, lower RPM range) generates far more lift than Bell 206B (blue). Both exceed MTOW hover threshold (dashed lines) confirming positive lift margins.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">AW139: ~4.4× more lift than 206B</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 9 — Lift vs Pitch: Both Aircraft</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Comparison at cruise RPM (Bell 206B: 355 RPM, AW139: 245 RPM). Stall onset at 14° clearly marked. Both show positive lift margin above MTOW dashed lines.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Stall: 14° | Both above MTOW threshold</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 10 — Spanwise Distribution (Normalised)</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">0–100% normalised span. AW139 (blue) peaks at ~7,000 N/m vs Bell 206B (red) at ~6,000 N/m at tip. Same tip-dominant pattern for both aircraft.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">AW139 tip: ~7,000 N/m | 206B: ~6,000 N/m</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2C -->
+      <div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;">
+          <span style="display:block;width:24px;height:1px;background:var(--amber)"></span>
+          Phase 2C — Power & Figure of Merit (Plots 11–14)
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;">
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 11 — Power Required vs RPM</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Total hover power at MTOW across operational RPM range. Bell 206B: 72.8 kW max. AW139: 287.7 kW max. AW139 requires ~3.95× more absolute power.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">206B: 72.8 kW | AW139: 287.7 kW</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 12 — Power Breakdown (Bar chart)</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Induced power (blue) vs Profile power (orange) for each aircraft. Bell 206B: Pi = 58.2 kW, P0 = 14.6 kW. AW139: Pi = 198.4 kW, P0 = 89.3 kW.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">Pi dominates in both aircraft</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 13 — Power vs Weight Fraction</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">AW139 reaches ~1,000 kW at MTOW (100%), dropping to ~590 kW at 70% MTOW. Bell 206B: ~200 kW at MTOW, ~118 kW at 70%. Power reduces non-linearly with weight.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--text)">At 70% MTOW: ~59% of hover power</div>
+          </div>
+          <div style="background:var(--panel);border:1px solid var(--rim);border-radius:var(--radius);overflow:hidden;border-color:rgba(245,166,35,0.4)">
+            <div style="background:#111;padding:8px 14px;border-bottom:1px solid var(--rim);font-family:var(--mono);font-size:11px;color:var(--amber)">Plot 14 — Figure of Merit ★</div>
+            <div style="padding:14px;font-size:13px;color:var(--muted);line-height:1.6;">Key efficiency metric. Bell 206B FM = 0.680 (below 0.75 threshold). AW139 FM = 0.780 (above threshold — excellent). FM differential of 0.100 attributed to disc loading and blade geometry.</div>
+            <div style="padding:0 14px 14px;font-family:var(--mono);font-size:11px;color:var(--amber)">FM: 0.680 (206B) vs 0.780 (AW139) ★</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-eyebrow">Technical profile</p>
+    <h2>Skills</h2>
+    <p class="section-sub">Technical competencies built through coursework, self-study, and independent engineering projects.</p>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Engineering software</div>
+        <div class="skill-item"><span class="skill-name">MATLAB</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">AutoCAD</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:75%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">MS Office Suite</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Arduino / ESP32</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Aeronautical knowledge</div>
+        <div class="skill-item"><span class="skill-name">Aerodynamics</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Aircraft structures</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">EASA Part-66 (self-study)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Propulsion systems</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Regulatory awareness</div>
+        <div class="skill-item"><span class="skill-name">NCAA MRO regulations</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:60%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">ICAO Annexes 6 & 8</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:55%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">EASA Part-145 (MRO)</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:50%"></div></div></div>
+        <div class="skill-item"><span class="skill-name">Aviation SMS fundamentals</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:58%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <p class="section-eyebrow">Credentials</p>
+    <h2>Certifications</h2>
+    <p class="section-sub">Professional certifications completed and in progress.</p>
+    <div class="certs-list">
+      <div class="cert-card">
+        <div class="cert-icon">📐</div>
+        <div>
+          <div class="cert-name">MATLAB Onramp</div>
+          <div class="cert-issuer">MathWorks</div>
+          <div class="cert-year">✓ 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">✈️</div>
+        <div>
+          <div class="cert-name">Aviation Safety Fundamentals</div>
+          <div class="cert-issuer">Coursera</div>
+          <div class="cert-year">✓ 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">🛡️</div>
+        <div>
+          <div class="cert-name">Safety Management Systems</div>
+          <div class="cert-issuer">IATA</div>
+          <div class="cert-year">In progress — Sep 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">✏️</div>
+        <div>
+          <div class="cert-name">AutoCAD Certified User</div>
+          <div class="cert-issuer">Autodesk</div>
+          <div class="cert-year">Exam: Aug 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📡</div>
+        <div>
+          <div class="cert-name">Signal Processing Onramp</div>
+          <div class="cert-issuer">MathWorks</div>
+          <div class="cert-year">In progress — Aug 2026</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-icon">📋</div>
+        <div>
+          <div class="cert-name">EASA Part-66 Modules 1–4</div>
+          <div class="cert-issuer">Self-study (NCAA exam planned)</div>
+          <div class="cert-year">Ongoing — 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background: var(--panel);">
+  <div class="container">
+    <p class="section-eyebrow">Background</p>
+    <h2>About</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a <strong>300-level Aerospace Engineering student</strong> at Lagos State University, Ojo, Lagos, with a CGPA of 3.2/5.0. My career objective is to become a licensed <strong>Category B1 Aircraft Maintenance Engineer</strong>, specialising in rotary-wing platforms operated in Nigeria's offshore oil and gas sector.</p>
+        <p>I am currently building toward my first industrial placement (SIWES) in January 2027, with applications submitted to <strong>Caverton Helicopters</strong>, <strong>Aero Contractors</strong>, <strong>Air Peace Technical</strong>, and remote opportunities at <strong>IATA</strong> and <strong>ICAO</strong>.</p>
+        <p>My independent study of <strong>EASA Part-66</strong> modules, combined with computational engineering projects in MATLAB and AutoCAD, reflects a commitment to professional readiness that goes beyond the minimum degree requirements. I am specifically drawn to the challenge of maintaining and certifying aircraft in environments where safety margins are uncompromising.</p>
+        <a href="CV_Henry_Oghenekeno_Richard.docx" class="btn btn-outline" download style="margin-top:8px">⬇ Download CV</a>
+      </div>
+      <div>
+        <div class="section-eyebrow" style="margin-bottom: 24px;">Career timeline</div>
+        <div class="career-timeline">
+          <div class="timeline-item">
+            <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2022 — Present</div>
+              <div class="timeline-title">B.Eng Aerospace Engineering</div>
+              <div class="timeline-sub">Lagos State University · CGPA 3.2/5.0</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-year">Jan 2027</div>
+              <div class="timeline-title">SIWES Industrial Placement</div>
+              <div class="timeline-sub">Target: Caverton / Aero Contractors / Air Peace Technical</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2027 — 2028</div>
+              <div class="timeline-title">Graduation & NCAT/MTO Enrolment</div>
+              <div class="timeline-sub">NCAA AME licence pathway</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2028 — 2031</div>
+              <div class="timeline-title">Category A → B1 Experience</div>
+              <div class="timeline-sub">MRO employment · logbook hours · type ratings</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-line"><div class="timeline-dot" style="border-color: #1D9E75; box-shadow: 0 0 8px rgba(29,158,117,0.5)"></div></div>
+            <div class="timeline-content">
+              <div class="timeline-year">2031+</div>
+              <div class="timeline-title">Licensed B1 AME — Rotary-wing</div>
+              <div class="timeline-sub">Type ratings · offshore certification · EASA conversion</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-eyebrow">Get in touch</p>
+    <h2>Contact</h2>
+    <div class="contact-grid">
+      <div>
+        <p style="font-size:16px;color:var(--muted);line-height:1.8;margin-bottom:32px">Open to SIWES placement opportunities, research collaborations, and connections with aviation professionals across Nigeria and Africa. Feel free to reach out.</p>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div><div class="contact-label">Email</div>
+          <div class="contact-val"><a href="mailto:kenorichard072@gmail.com">kenorichard072@gmail.com</a></div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div><div class="contact-label">Phone / WhatsApp</div>
+          <div class="contact-val">+234 708 2182 934</div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💼</div>
+          <div><div class="contact-label">LinkedIn</div>
+          <div class="contact-val"><a href="https://linkedin.com/in/oghenekeno-henry-019991235" target="_blank">oghenekeno-henry-019991235</a></div></div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div><div class="contact-label">Location</div>
+          <div class="contact-val">Lagos, Nigeria</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="report-card">
+          <h3>Applying for a SIWES placement?</h3>
+          <p>My full application package is available on request — including cover letter, CV, academic transcript, and the helicopter rotor analysis project report. I am targeting placements commencing January 2027 in MRO or technical maintenance environments.</p>
+          <a href="mailto:kenorichard072@gmail.com?subject=SIWES Placement Enquiry" class="btn btn-primary">Request Application Package →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-copy">© 2026 Henry Oghenekeno Richard · Lagos State University · Aerospace Engineering</div>
+  <div class="footer-links">
+    <a href="#projects">Projects</a>
+    <a href="#certifications">Certifications</a>
+    <a href="mailto:kenorichard072@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/oghenekeno-henry-019991235" target="_blank">LinkedIn</a>
+  </div>
+</footer>
+
+<script>
+  // Animate RPM display on rotor
+  const displays = [
+    "RPM: 300 \u00a0|\u00a0 FM: 0.730",
+    "RPM: 355 \u00a0|\u00a0 Bell 206B",
+    "RPM: 245 \u00a0|\u00a0 AW139",
+    "FM: 0.780 \u00a0|\u00a0 AW139",
+    "FM: 0.680 \u00a0|\u00a0 Bell 206B",
+  ];
+  let di = 0;
+  setInterval(() => {
+    di = (di + 1) % displays.length;
+    document.getElementById('rpm-display').textContent = displays[di];
+  }, 2200);
+
+  // Smooth active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 80) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--amber)' : '';
+    });
+  });
+</script>
+</body>
+</html>
